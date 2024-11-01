@@ -7,8 +7,7 @@ load_dotenv()
 # Set up connection parameters
 host: str = "localhost"
 port: int = 4444
-password: str = os.getenv('api_key')
-
+password: str = os.getenv('api_key_obs')
 
 # OBS Cred
 ws = obsws(host, port, password)
@@ -18,7 +17,6 @@ def ConnectOBS() -> None:
     """Connects to OBS"""
     try:
         ws.connect()
-        print("Connected")
     except Exception as e:
         print(f"Error Occured while trying to Connect: {e}")
 
@@ -26,10 +24,9 @@ def ConnectOBS() -> None:
 def SwitchScene(scene) -> None:
     """Switches to given Scene"""
     try:
-        NewScene: int = scene
+        NewScene: str = scene
         ws.call(requests.SetCurrentScene(
-            **{'scene-name': NewScene}))  # WHY???
-        print("Scene Switched")
+            **{'scene-name': NewScene}))
     except Exception as e:
         print(f"Error Occured while trying to Switch Scenes: {e}")
 
@@ -38,6 +35,8 @@ def DisconnectOBS() -> None:
     """Disconnects from OBS"""
     try:
         ws.disconnect()
-        print("Disconnected")
     except Exception as e:
         print(f"Error Occured while trying to Disconnect: {e}")
+
+
+ConnectOBS()
